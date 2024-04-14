@@ -48,5 +48,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Screenshots
 
-![Screenshot 1](file:///home/pentestlab/Pictures/subd0m1.png)
+![Screenshot 1](/home/pentestlab/Pictures/subd0m1.png)
 ![Screenshot 2](link_to_screenshot_2)
