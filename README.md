@@ -43,7 +43,7 @@ Replace `<target_domain>` with the domain you want to enumerate subdomains for, 
 ```bash
 python3 subd0m.py -t example.com
 python3 subd0m.py -t example.com -f test.txt -o output.txt
-
+```
 
 ## Author
 
