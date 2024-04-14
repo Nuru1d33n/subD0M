@@ -49,4 +49,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Screenshots
 
 ![Screenshot 1](screenshots/subd0m1.png)
-![Screenshot 2](link_to_screenshot_2)
+![Screenshot 2](screenshots/subD0M2.png)
+
