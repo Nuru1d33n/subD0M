@@ -32,11 +32,18 @@ python3 subD0M.py -t <target_domain> -f <wordlist_file> -o <output_file>
 
 Replace `<target_domain>` with the domain you want to enumerate subdomains for, `<wordlist_file>` with the path to the wordlist file containing potential subdomains, and `<output_file>` with the desired filename to save the found subdomains.
 
-## Example
 
-```
-python3 subD0M.py -t example.com -f wordlist.txt -o subdomains.txt
-```
+
+- `<target_domain>`: The domain you want to enumerate subdomains for.
+- `<wordlist_file>`: The path to the wordlist file containing potential subdomains.
+- `<output_file>`: The desired filename to save the found subdomains.
+
+## Examples
+
+```bash
+python3 subd0m.py -t example.com
+python3 subd0m.py -t example.com -f test.txt -o output.txt
+
 
 ## Author
 
