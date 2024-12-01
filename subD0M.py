@@ -11,7 +11,7 @@ import json
 import csv
 
 # Define version and author information
-VERSION = "1.1"
+VERSION = "1.2"
 AUTHOR = "Nurudeen Adebileje"
 
 def print_ascii_art():
@@ -30,9 +30,9 @@ def parse_arguments():
     """
     examples = '''
     Examples:
-    ./subD0M.py -t example.com
+    ./subD0M.py -t example.com -f test.txt
     ./subD0M.py -t example.com -f test.txt -o output.txt
-    ./subD0M.py -t example.com -b 2 -o output.json
+    ./subD0M.py -t example.com -b 2 -o output.json -v
     '''
     
     parser = argparse.ArgumentParser(description='Subdomain Enumeration Tool', formatter_class=argparse.RawTextHelpFormatter, epilog=examples)
@@ -42,16 +42,21 @@ def parse_arguments():
     parser.add_argument('--json', dest='json_output', help='Output file to save subdomains in JSON format')
     parser.add_argument('--csv', dest='csv_output', help='Output file to save subdomains in CSV format')
     parser.add_argument('-b', '--bruteforce', dest='bruteforce_length', type=int, help='Enable bruteforce with specified character count (e.g., 2 or 3)')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode for detailed output')
     return parser.parse_args()
 
-def make_request(url):
+def make_request(url, verbose=False):
     """
     Makes an HTTP(S) request to a URL and returns the response.
     """
     try:
         response = requests.get(url, timeout=5)
+        if verbose:
+            print(colored(f"[DEBUG] {url} returned status {response.status_code}", "blue"))
         return response
-    except requests.RequestException:
+    except requests.RequestException as e:
+        if verbose:
+            print(colored(f"[DEBUG] {url} failed with error: {e}", "red"))
         return None
 
 def save_output(subdomains, output_file, json_output, csv_output):
@@ -93,31 +98,30 @@ def main():
         print(colored("[*] Welcome to subD0M - Subdomain Enumeration Tool", "green"))
         args = parse_arguments()
         target_domain = args.target_domain
+        verbose = args.verbose
         subdomains = []
 
-        # Generate subdomains
-        if args.wordlist_file:
-            if not os.path.isfile(args.wordlist_file):
-                print(colored(f"[!] Wordlist file '{args.wordlist_file}' not found.", "red"))
-                return
+        # Determine the source of subdomain candidates
+        if args.wordlist_file and os.path.isfile(args.wordlist_file):
+            print(colored(f"[*] Using wordlist: {args.wordlist_file}", "yellow"))
             with open(args.wordlist_file, 'r') as file:
                 subdomain_candidates = [line.strip() + '.' + target_domain for line in file]
         elif args.bruteforce_length:
             print(colored(f"[*] Using bruteforce with length {args.bruteforce_length}", "yellow"))
             subdomain_candidates = list(bruteforce_subdomains(args.bruteforce_length, target_domain))
         else:
-            print(colored("[!] Provide a wordlist file or enable bruteforce (-b).", "red"))
+            print(colored("[!] Error: Provide either a wordlist file (-f) or enable bruteforce (-b).", "red"))
             return
 
         # Enumerate subdomains
         print(colored("\n[*] Enumerating subdomains:", "yellow"))
         for subdomain in tqdm(subdomain_candidates, desc="Progress"):
-            response = make_request(f"http://{subdomain}")
+            response = make_request(f"http://{subdomain}", verbose)
             if response:
                 status_code = response.status_code
                 print(colored(f"[+] Found: {subdomain} ({status_code})", "green"))
                 subdomains.append((subdomain, status_code))
-            else:
+            elif verbose:
                 print(colored(f"[-] No response: {subdomain}", "red"))
 
         # Save output
@@ -131,4 +135,3 @@ def main():
 if __name__ == "__main__":
     print_ascii_art()
     main()
-
