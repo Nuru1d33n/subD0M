@@ -17,20 +17,21 @@ subD0M is a Python-based command-line tool for enumerating subdomains of a targe
 1. Clone the repository:
 
    ```bash
-   git clone git@github.com:Nuru1d33n/subD0M.git
-   cd subD0M
+	git clone git@github.com:Nuru1d33n/subD0M.git
+   	cd subD0M
    ```
 
 2. Install the required dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   	pip install -r requirements.txt
    ```
 
 3. Make the tool executable:
 
    ```bash
-   chmod +x subD0M.py
+   	chmod +x subD0M.py
+	./setup.sh
    ```
 
 ## Usage
@@ -38,7 +39,7 @@ subD0M is a Python-based command-line tool for enumerating subdomains of a targe
 Run the tool with the following command:
 
 ```bash
-./subD0M.py -t <target_domain> [options]
+subD0M.py -t <target_domain> [options]
 ```
 
 ### Arguments:
@@ -51,18 +52,18 @@ Run the tool with the following command:
 
 #### Using a Wordlist
 ```bash
-./subD0M.py -t example.com -f test.txt -o output.txt
+	subD0M.py -t example.com -f test.txt -o output.txt
 ```
 
 #### Using Bruteforce
 To generate subdomains dynamically with two-character combinations:
 ```bash
-./subD0M.py -t example.com -b 2 -o output.txt
+	subD0M.py -t example.com -b 2 -o output.txt
 ```
 
 To generate subdomains dynamically with three-character combinations:
 ```bash
-./subD0M.py -t example.com -b 3
+	subD0M.py -t example.com -b 3
 ```
 
 #### Using Default Options
