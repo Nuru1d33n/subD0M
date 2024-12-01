@@ -1,49 +1,89 @@
+
 # Subdomain Enumeration Tool (subD0M)
 
-subD0M is a Python-based command-line tool for enumerating subdomains of a target domain using a wordlist file. It utilizes the requests library to make HTTP requests to potential subdomains and identifies those that return valid responses.
+subD0M is a Python-based command-line tool for enumerating subdomains of a target domain. It supports using a wordlist file or dynamic bruteforce generation. It also validates subdomains by checking their HTTP status codes and saves the results for further analysis.
 
 ## Features
 
-- Enumerates subdomains of a target domain using a provided wordlist file.
+- Enumerates subdomains of a target domain using:
+  - A provided wordlist file.
+  - **Bruteforce generation** based on a specified character count.
 - Supports both HTTP and HTTPS requests to subdomains.
-- Saves the found subdomains to an output file for further analysis.
+- Displays and saves **HTTP status codes** for discovered subdomains.
+- Saves the found subdomains and their details to an output file.
 
 ## Installation
 
 1. Clone the repository:
 
-```
-git clone https://github.com/Nuru1d33n/subD0M.git
-```
+   ```bash
+   git clone git@github.com:Nuru1d33n/subD0M.git
+   cd subD0M
+   ```
 
 2. Install the required dependencies:
 
-```
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Make the tool executable:
+
+   ```bash
+   chmod +x subD0M.py
+   ```
 
 ## Usage
 
 Run the tool with the following command:
 
-```
-python3 subD0M.py -t <target_domain> -f <wordlist_file> -o <output_file>
-```
-
-Replace `<target_domain>` with the domain you want to enumerate subdomains for, `<wordlist_file>` with the path to the wordlist file containing potential subdomains, and `<output_file>` with the desired filename to save the found subdomains.
-
-
-
-- `<target_domain>`: The domain you want to enumerate subdomains for.
-- `<wordlist_file>`: The path to the wordlist file containing potential subdomains.
-- `<output_file>`: The desired filename to save the found subdomains.
-
-## Examples
-
 ```bash
-python3 subd0m.py -t example.com
-python3 subd0m.py -t example.com -f test.txt -o output.txt
+./subD0M.py -t <target_domain> [options]
 ```
+
+### Arguments:
+- `-t, --target <target_domain>`: The domain you want to enumerate subdomains for (required).
+- `-f, --file <wordlist_file>`: The path to a wordlist file containing potential subdomains (default: `test.txt`).
+- `-o, --output <output_file>`: The desired filename to save the found subdomains (default: `subdomains.txt`).
+- `-b, --bruteforce <char_count>`: Enable bruteforce generation of subdomains with a specified number of characters (e.g., `2` or `3`).
+
+### Examples
+
+#### Using a Wordlist
+```bash
+./subD0M.py -t example.com -f test.txt -o output.txt
+```
+
+#### Using Bruteforce
+To generate subdomains dynamically with two-character combinations:
+```bash
+./subD0M.py -t example.com -b 2 -o output.txt
+```
+
+To generate subdomains dynamically with three-character combinations:
+```bash
+./subD0M.py -t example.com -b 3
+```
+
+#### Using Default Options
+```bash
+./subD0M.py -t example.com
+```
+By default:
+- Wordlist: `test.txt`
+- Output: `subdomains.txt`
+
+### Output
+The results will include:
+- Found subdomains
+- Their HTTP status codes
+- Saved in the specified output file
+
+## Screenshots
+
+![Screenshot 1](screenshots/subd0m1.png)
+![Screenshot 2](screenshots/subD0M2.png)
+![Screenshot 3](screenshots/subD0M3.png)
 
 ## Author
 
@@ -52,10 +92,3 @@ Nurudeen Adebileje
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Screenshots
-
-![Screenshot 1](screenshots/subd0m1.png)
-![Screenshot 2](screenshots/subD0M2.png)
-![Screenshot 3](screenshots/subD0M3.png)
-
